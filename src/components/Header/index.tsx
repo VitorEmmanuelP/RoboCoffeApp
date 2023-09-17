@@ -11,15 +11,19 @@ import {
   WrapperTouchable,
 } from "./styles";
 import { HeaderProps } from "./types";
-import { MaterialIcons } from "@expo/vector-icons";
-import { styles } from "../../common/styles";
 
-const Header = ({ text }: HeaderProps) => {
+const Header = ({ text, onBack, onLogOut }: HeaderProps) => {
   return (
     <WrapperHeader>
       <WrapperIcon>
-        <Icons tamanho={30} name="keyboard-arrow-left" />
-        <Icons tamanho={25} name="logout" />
+        {
+          <WrapperTouchable onPress={onBack}>
+            {onBack && <Icons tamanho={30} name="keyboard-arrow-left" />}
+          </WrapperTouchable>
+        }
+        <WrapperTouchable onPress={onLogOut}>
+          <Icons tamanho={25} name="logout" />
+        </WrapperTouchable>
       </WrapperIcon>
       <WrapperImage>
         <WrapperTouchable>

@@ -4,13 +4,14 @@ import { TouchableHighlight, TouchableOpacity, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export const WrapperHeader = styled.View`
-  height: 35%;
-  background-color: ${styles.colors.gray_500};
+  height: 310px;
+  background-color: ${styles.colors.gray_400};
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
 `;
 export const WrapperIcon = styled.View`
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 export const WrapperTouchable = styled(TouchableOpacity)`
@@ -20,7 +21,6 @@ export const WrapperTouchable = styled(TouchableOpacity)`
 export const WrapperImage = styled.View`
   height: 150px;
   align-items: center;
-
   margin-bottom: 20px;
 `;
 export const ProfileImage = styled.Image`
@@ -35,7 +35,8 @@ export const WrapperText = styled.View`
 export const TextHeader = styled(Text)`
   font-size: 50px;
   font-weight: 400;
-  color: ${styles.colors.TEXT_COLOR};
+  color: ${styles.colors.brow_700};
+  font-family: "Inder-Regular";
 `;
 
 export const Icons = styled(MaterialIcons).attrs(

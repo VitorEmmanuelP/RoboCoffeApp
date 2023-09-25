@@ -13,7 +13,7 @@ export const Wrapper = styled.View<WrapperProps>`
   flex-direction: row;
   justify-content: space-around;
   padding: 5px 10px;
-  background-color: ${styles.colors.gray_600};
+  background-color: ${styles.colors.green_400};
 `;
 export const WrapperTabBar = styled.View`
   align-items: center;

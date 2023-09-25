@@ -6,13 +6,24 @@ import { Entypo } from "@expo/vector-icons";
 import { TagProps } from "./types";
 
 export const Wrapper = styled.View<TagProps>`
-  width: 130px;
-  height: 50px;
   align-items: center;
   justify-content: center;
   padding: 0px 18px;
   border-radius: 10px;
 
+  ${({ size }: TagProps) =>
+    size === "BIG" &&
+    css`
+      width: 130px;
+      height: 50px;
+    `}
+
+  ${({ size }: TagProps) =>
+    size === "SMALL" &&
+    css`
+      width: 100px;
+      height: 40px;
+    `}
   ${({ variant }: TagProps) =>
     variant === "OK" &&
     css`
@@ -37,6 +48,5 @@ export const Wrapper = styled.View<TagProps>`
 export const Texto = styled(Text)`
   font-size: 25px;
   font-weight: 400;
-  font-family: "Inder-Regular";
   color: ${styles.colors.base_white};
 `;

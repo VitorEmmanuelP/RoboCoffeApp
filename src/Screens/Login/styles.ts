@@ -3,11 +3,11 @@ import { styles } from "../../common/styles";
 
 export const Wrapper = styled.View`
   flex: 1;
-  background-color: ${styles.colors.gray_600};
+  background-color: ${styles.colors.screen_color};
 `;
 export const WrapperHeader = styled.View`
   height: 310px;
-  background-color: ${styles.colors.gray_400};
+  background-color: ${styles.colors.green_400};
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
 `;

@@ -7,16 +7,32 @@ import Home from "../../Screens/Home";
 import Login from "../../Screens/Login";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
-import Reports from "../../Screens/Report";
+import Reports from "../../Screens/Reports";
 import Notifications from "../../Screens/Notifications";
+import Notification from "../../Screens/Notification";
+
 import { styles } from "../../common/styles";
 import TabBar from "./customTabBar";
+import Profile from "../../Screens/Profile";
+import AddTerrain from "../../Screens/AddTerrain";
+import Terreiros from "../../Screens/Terreiros";
+import Terreiro from "../../Screens/Terreiro";
+import CriarRelatorio from "../../Screens/CriarRelatorio";
+import Report from "../../Screens/Report";
 
 export type StackNavigation = {
   Home: undefined;
   Login: undefined;
-  Register: undefined;
-  Exemple: undefined;
+  Notifications: undefined;
+  Notification: undefined;
+  Profile: undefined;
+  Reports: undefined;
+  ReportItem: undefined;
+  Tabs: undefined;
+  AddTerrain: undefined;
+  Terreiros: undefined;
+  Terreiro: undefined;
+  CriarRelatorio: undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -79,11 +95,26 @@ const TabsNavigation = () => {
         name="Notifications"
         component={Notifications}
       />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="notifications-none"
+              size={ICON_SIZE}
+              color="white"
+              style={{ opacity: focused ? 1 : 0.5 }}
+            />
+          ),
+        }}
+        name="Report"
+        component={Reports}
+      />
     </Tab.Navigator>
   );
 };
 
 export type StackTypes = NativeStackNavigationProp<StackNavigation>;
+
 export const StackComponent = () => {
   return (
     <NavigationContainer>
@@ -93,7 +124,7 @@ export const StackComponent = () => {
         }}
       >
         <Stack.Screen
-          name="tabs"
+          name="Tabs"
           component={TabsNavigation}
           options={{ headerShown: false }}
         />
@@ -105,6 +136,52 @@ export const StackComponent = () => {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notification"
+          component={Notification}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Reports"
+          component={Reports}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="AddTerrain"
+          component={AddTerrain}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Terreiro"
+          component={Terreiro}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Terreiros"
+          component={Terreiros}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CriarRelatorio"
+          component={CriarRelatorio}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ReportItem"
+          component={Report}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

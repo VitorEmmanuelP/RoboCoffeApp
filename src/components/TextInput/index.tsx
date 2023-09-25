@@ -17,6 +17,7 @@ const TextField = ({
   iconRight,
   placeholder,
   hidePassword,
+  ...rest
 }: TextInputProps) => {
   const [show, setShow] = useState(false);
   return (
@@ -24,6 +25,7 @@ const TextField = ({
       <WrapperRight>
         {iconRight && <Icons name={iconRight} />}
         <Input
+          {...rest}
           secureTextEntry={hidePassword ? !show : false}
           inputMode={hidePassword && "decimal"}
           keyboardType={hidePassword && "decimal-pad"}

@@ -4,22 +4,29 @@ import { TouchableHighlight, TouchableOpacity, Text } from "react-native";
 
 export const Wrapper = styled.View`
   flex: 1;
-  background-color: ${styles.colors.gray_600};
+  background-color: ${styles.colors.screen_color};
 `;
 export const WrapperSol = styled.View`
-  width: 200px;
-  height: 200px;
-  background-color: ${styles.colors.green_700};
+  margin-top: 25px;
+  margin-bottom: 25px;
+  align-items: center;
 `;
 export const WrapperStatus = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 15px;
 `;
+export const TextTime = styled(Text)`
+  font-size: 40px;
+  font-weight: 400;
+  color: ${styles.colors.brow_700};
+  position: absolute;
+  transform: translateY(110px);
+`;
 export const Texto = styled(Text)`
   font-size: 25px;
   font-weight: 400;
-  font-family: "Inder-Regular";
+
   color: ${styles.colors.brow_700};
 
   margin-right: 40px;

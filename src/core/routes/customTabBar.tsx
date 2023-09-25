@@ -35,6 +35,10 @@ const TabBar: React.FC = ({ state, descriptors, navigation }: any) => {
             }
           };
 
+          if (route.name === "Report") {
+            return null;
+          }
+
           return (
             <WrapperTabBar key={index}>
               <Pressable onPress={onPress}>

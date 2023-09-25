@@ -1,18 +1,25 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { styles } from "../../common/styles";
 import { TouchableHighlight, TouchableOpacity, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { WrapperProps } from "./types";
 
 export const WrapperHeader = styled.View`
   height: 310px;
-  background-color: ${styles.colors.gray_400};
+  background-color: ${styles.colors.green_400};
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
 `;
-export const WrapperIcon = styled.View`
+export const WrapperIcon = styled.View<WrapperProps>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-left: 0px;
+  ${({ onBack }: WrapperProps) =>
+    !onBack &&
+    css`
+      margin-left: auto;
+    `}
 `;
 export const WrapperTouchable = styled(TouchableOpacity)`
   align-items: center;
@@ -33,10 +40,10 @@ export const WrapperText = styled.View`
 `;
 
 export const TextHeader = styled(Text)`
-  font-size: 50px;
-  font-weight: 400;
-  color: ${styles.colors.brow_700};
-  font-family: "Inder-Regular";
+  font-size: 40px;
+  font-weight: bold;
+
+  color: ${styles.colors.base_white};
 `;
 
 export const Icons = styled(MaterialIcons).attrs(

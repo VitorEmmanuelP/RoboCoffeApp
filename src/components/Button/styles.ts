@@ -9,6 +9,7 @@ export const Wrapper = styled(TouchableOpacity)<ButtonProps>`
   align-items: center;
   justify-content: center;
   padding: 0px 18px;
+  margin: 5px 0px;
   border-radius: 10px;
 
   ${({ variant }: ButtonProps) =>
@@ -16,24 +17,59 @@ export const Wrapper = styled(TouchableOpacity)<ButtonProps>`
     css`
       height: 60px;
       width: 248px;
-      background-color: ${styles.colors.gray_400};
+      background-color: ${styles.colors.green_400};
     `}
   ${({ variant }: ButtonProps) =>
     variant === "outlined" &&
     css`
       background-color: transparent;
     `}
-  ${({ variant }: ButtonProps) => variant === "underlined" && css``}
-`;
-export const Texto = styled(Text)<ButtonProps>`
-  font-size: 30px;
-  font-weight: 400;
-  font-family: "Inder-Regular";
-  color: ${styles.colors.brow_700};
   ${({ variant }: ButtonProps) =>
     variant === "underlined" &&
     css`
-      font-size: 10px;
+      height: 40px;
+    `}
+  ${({ variant }: ButtonProps) =>
+    variant === "add" &&
+    css`
+      height: 60px;
+      width: 248px;
+      background-color: transparent;
+      border-width: 1.5px;
+      border-color: ${styles.colors.green_700};
+    `}
+  ${({ variant }: ButtonProps) =>
+    variant === "remove" &&
+    css`
+      height: 60px;
+      width: 248px;
+      background-color: transparent;
+      border-width: 1.5px;
+      border-color: ${styles.colors.red_100};
+    `}
+`;
+export const Texto = styled(Text)<ButtonProps>`
+  font-size: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: ${styles.colors.base_white};
+  ${({ variant }: ButtonProps) =>
+    variant === "underlined" &&
+    css`
+      font-size: 12px;
+      color: ${styles.colors.green_700};
+
       text-decoration: underline;
+    `}
+
+  ${({ variant }: ButtonProps) =>
+    variant === "add" &&
+    css`
+      color: ${styles.colors.green_700};
+    `}
+  ${({ variant }: ButtonProps) =>
+    variant === "remove" &&
+    css`
+      color: ${styles.colors.red_100};
     `}
 `;

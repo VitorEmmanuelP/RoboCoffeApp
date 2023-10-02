@@ -47,7 +47,7 @@ const TabBar: React.FC = ({ state, descriptors, navigation }: any) => {
                     {options.tabBarIcon?.({
                       focused: isFocused,
                       color: "",
-                      size: 10,
+                      size: 20,
                     })}
                   </View>
                 </WrapperTab>

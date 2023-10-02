@@ -1,15 +1,17 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+
 import { Texto, Title, Wrapper, WrapperContente, WrapperText } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { StackTypes } from "../../core/routes";
 import Header from "../../components/Header";
 const Profile = () => {
   const navigation = useNavigation<StackTypes>();
+  const [image, setImage] = useState("");
 
   return (
     <Wrapper>
-      <Header text="Vitor Emmanuel" onBack onLogOut />
+      <Header text="Vitor Emmanuel" onBack onLogOut image={image} />
       <WrapperContente>
         <WrapperText>
           <Title>Nome</Title>

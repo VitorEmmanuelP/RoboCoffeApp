@@ -17,7 +17,7 @@ export const Wrapper = styled.View<WrapperProps>`
 `;
 export const WrapperTabBar = styled.View`
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   margin: 10px;
 `;

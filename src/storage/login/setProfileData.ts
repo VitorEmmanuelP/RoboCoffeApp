@@ -4,9 +4,9 @@ import { getProfileData } from "./getProfileData";
 const setProfileData = async (data: any) => {
   try {
     const storagePlayer = await getProfileData();
-
+    console.log("!ADAW");
     const storage = JSON.stringify([data]);
-    console.log("DWADWAD");
+
     await AsyncStorage.setItem("ProfileData", storage);
   } catch (error) {
     throw error;

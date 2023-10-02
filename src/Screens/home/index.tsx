@@ -21,6 +21,7 @@ import Svg, { Path } from "react-native-svg";
 const Home = () => {
   const navigation = useNavigation<StackTypes>();
   const [currentTime, setCurrentTime] = useState(new Date());
+
   useEffect(() => {
     const updateTime = () => {
       setCurrentTime(new Date());
@@ -35,6 +36,7 @@ const Home = () => {
     hour: "2-digit",
     minute: "2-digit",
   });
+
   return (
     <Wrapper>
       <Header text="Home" onLogOut />
@@ -46,6 +48,7 @@ const Home = () => {
               stroke="#7C7C8A"
             />
           </Svg>
+
           <Image
             source={require("../../common/images/sol.png")}
             style={{
@@ -55,6 +58,7 @@ const Home = () => {
               transform: [{ translateX: 0 }, { translateY: -25 }],
             }}
           />
+
           <TextTime>{formattedTime}</TextTime>
         </WrapperSol>
 

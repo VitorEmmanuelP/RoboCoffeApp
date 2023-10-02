@@ -1,4 +1,12 @@
-import { View, Text, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ActivityIndicator,
+  StyleSheet,
+  Modal,
+  StatusBar,
+} from "react-native";
 import React, { useState } from "react";
 import {
   ProfileImage,
@@ -26,23 +34,22 @@ const Login = () => {
   const navigation = useNavigation<StackTypes>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [datas, setDatas] = useState();
+
+  const [loading, setLoading] = useState(false);
 
   const getData = async () => {
     const dataBaseRef = collection(FirebaseDataBase, "profileData");
-
+    const listData = [];
     const data = onSnapshot(dataBaseRef, {
       next: (snapshot) => {
-        const listData = [];
-
         snapshot.docs.forEach((docs) => {
+          console.log("VIOTR ", docs.data());
           listData.push({ id: docs.id, ...docs.data() });
         });
-        setDatas(listData);
       },
     });
-    console.log(datas);
-    return () => data();
+
+    return listData;
   };
 
   const loginCheck = async () => {
@@ -53,13 +60,14 @@ const Login = () => {
           email,
           password
         );
-
+        setLoading(true);
         if (response.user) {
-          await getData();
+          const infoUser = await getData();
 
-          await setProfileData(datas);
+          await setProfileData(infoUser);
+          setLoading(false);
 
-          // navigation.replace("Home");
+          navigation.replace("Tabs");
           showToast({
             text: "Conectado",
             border: true,
@@ -79,6 +87,7 @@ const Login = () => {
           durations: 2000,
         });
       }
+      setLoading(false);
     } else {
       showToast({
         text: "Não deixe nenhum campo vazio",
@@ -93,6 +102,12 @@ const Login = () => {
 
   return (
     <Wrapper>
+      <StatusBar
+        backgroundColor={
+          loading ? "rgba(2,59,40,255)" : styles.colors.green_400
+        }
+      />
+      <LoadingModal isVisible={loading} />
       <WrapperHeader>
         <WrapperImage>
           <ProfileImage source={require("../../common/images/logo.png")} />
@@ -125,14 +140,6 @@ const Login = () => {
             text="Esqueceu a senha?"
             onPress={getData}
           />
-          <Button
-            variant="underlined"
-            text="AAAEsqueceu a senha?"
-            onPress={async () => {
-              const a = await getProfileData();
-              console.log(a);
-            }}
-          />
         </WrapperButton>
       </WrapperContent>
     </Wrapper>
@@ -140,3 +147,34 @@ const Login = () => {
 };
 
 export default Login;
+
+const LoadingModal = ({ isVisible }: { isVisible: boolean }) => {
+  return (
+    <Modal transparent visible={isVisible}>
+      <View style={ad.modalContainer}>
+        <View style={ad.modalContent}>
+          <ActivityIndicator size={50} color={styles.colors.green_400} />
+          <Text style={{ marginTop: 30, fontWeight: "bold" }}>Loading...</Text>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+const ad = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    borderRadius: 15,
+
+    backgroundColor: "white",
+    width: 200,
+    height: 200,
+  },
+});

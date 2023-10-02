@@ -49,7 +49,6 @@ export const Wrapper = styled(TouchableOpacity)<ButtonProps>`
     `}
 `;
 export const Texto = styled(Text)<ButtonProps>`
-  font-size: 25px;
   font-weight: bold;
   text-transform: uppercase;
   color: ${styles.colors.base_white};
@@ -65,11 +64,19 @@ export const Texto = styled(Text)<ButtonProps>`
   ${({ variant }: ButtonProps) =>
     variant === "add" &&
     css`
+      font-size: 15px;
+
       color: ${styles.colors.green_700};
+    `}
+  ${({ variant }: ButtonProps) =>
+    variant === "filled" &&
+    css`
+      font-size: 15px;
     `}
   ${({ variant }: ButtonProps) =>
     variant === "remove" &&
     css`
+      font-size: 15px;
       color: ${styles.colors.red_100};
     `}
 `;

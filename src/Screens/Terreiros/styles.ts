@@ -5,9 +5,14 @@ export const Wrapper = styled.View`
   flex: 1;
   background-color: ${styles.colors.screen_color};
 `;
+
+export const WrapperButton = styled.View`
+  align-items: center;
+  margin: 10px;
+`;
 export const WrapperContente = styled.View`
   width: 90%;
-  height: 55%;
+  height: 45%;
   border-radius: 10px;
   margin-top: 20px;
   align-self: center;

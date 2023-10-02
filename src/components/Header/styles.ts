@@ -33,6 +33,8 @@ export const WrapperImage = styled.View`
 export const ProfileImage = styled.Image`
   width: 150px;
   height: 150px;
+
+  border-radius: 100px;
 `;
 export const WrapperText = styled.View`
   width: 100%;

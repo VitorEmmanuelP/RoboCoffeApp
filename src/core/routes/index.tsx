@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Home from "../../Screens/Home";
+
 import Login from "../../Screens/Login";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -19,6 +19,8 @@ import Terreiros from "../../Screens/Terreiros";
 import Terreiro from "../../Screens/Terreiro";
 import CriarRelatorio from "../../Screens/CriarRelatorio";
 import Report from "../../Screens/Report";
+import Home from "../../Screens/Home";
+import { View } from "react-native";
 
 export type StackNavigation = {
   Home: undefined;
@@ -56,12 +58,19 @@ const TabsNavigation = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="file1"
-              size={18}
-              color={"white"}
-              style={{ opacity: focused ? 1 : 0.5 }}
-            />
+            <View
+              style={{
+                width: 40,
+                alignItems: "center",
+              }}
+            >
+              <AntDesign
+                name="file1"
+                size={18}
+                color={"white"}
+                style={{ opacity: focused ? 1 : 0.5 }}
+              />
+            </View>
           ),
         }}
         name="Reports"
@@ -70,12 +79,19 @@ const TabsNavigation = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="home"
-              size={ICON_SIZE}
-              color="white"
-              style={{ opacity: focused ? 1 : 0.5 }}
-            />
+            <View
+              style={{
+                width: 40,
+                alignItems: "center",
+              }}
+            >
+              <MaterialIcons
+                name="home"
+                size={ICON_SIZE}
+                color="white"
+                style={{ opacity: focused ? 1 : 0.5 }}
+              />
+            </View>
           ),
         }}
         name="Home"
@@ -84,12 +100,19 @@ const TabsNavigation = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="notifications-none"
-              size={ICON_SIZE}
-              color="white"
-              style={{ opacity: focused ? 1 : 0.5 }}
-            />
+            <View
+              style={{
+                width: 40,
+                alignItems: "center",
+              }}
+            >
+              <MaterialIcons
+                name="notifications-none"
+                size={ICON_SIZE}
+                color="white"
+                style={{ opacity: focused ? 1 : 0.5 }}
+              />
+            </View>
           ),
         }}
         name="Notifications"

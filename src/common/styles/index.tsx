@@ -15,7 +15,7 @@ export const styles = {
 
     green_700: "#00875F",
     green_500: "#00B37E",
-    green_400: "#04764E",
+    green_400: "#04764e",
 
     brow_800: "#575038",
 

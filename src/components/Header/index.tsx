@@ -14,7 +14,7 @@ import { HeaderProps } from "./types";
 import { StackTypes } from "../../core/routes";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = ({ text, onBack, onLogOut, onProfile }: HeaderProps) => {
+const Header = ({ text, onBack, onLogOut, onProfile, image }: HeaderProps) => {
   const navigation = useNavigation<StackTypes>();
 
   const handleProfleClick = () => {
@@ -28,7 +28,7 @@ const Header = ({ text, onBack, onLogOut, onProfile }: HeaderProps) => {
     navigation.goBack();
   };
   const handleOnLogOut = () => {
-    navigation.navigate("Login");
+    navigation.replace("Login");
   };
   return (
     <WrapperHeader>
@@ -46,7 +46,13 @@ const Header = ({ text, onBack, onLogOut, onProfile }: HeaderProps) => {
       </WrapperIcon>
       <WrapperImage>
         <WrapperTouchable onPress={handleProfleClick}>
-          <ProfileImage source={require("../../common/images/profile.png")} />
+          <ProfileImage
+            source={
+              image
+                ? { uri: image }
+                : require("../../common/images/profile.png")
+            }
+          />
         </WrapperTouchable>
       </WrapperImage>
       <WrapperText>

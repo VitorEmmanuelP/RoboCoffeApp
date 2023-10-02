@@ -9,6 +9,7 @@ import * as Font from "expo-font";
 import { StackComponent } from "./src/core/routes";
 import { toastConfig } from "./src/components/toast/Toast";
 import Toast from "react-native-toast-message";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const App = () => {
   const [IsReady, SetIsReady] = useState(false);
@@ -50,9 +51,11 @@ const App = () => {
       style={{ flex: 1, backgroundColor: styles.colors.green_400 }}
       // onLayout={onLayoutRootView}
     >
-      <StatusBar backgroundColor={styles.colors.green_400} />
-      <StackComponent />
-      <Toast config={toastConfig} />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar backgroundColor={styles.colors.green_400} />
+        <StackComponent />
+        <Toast config={toastConfig} />
+      </GestureHandlerRootView>
     </View>
   );
 };

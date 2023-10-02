@@ -1,6 +1,13 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { Texto, Title, Wrapper, WrapperContente, WrapperText } from "./styles";
+import {
+  Texto,
+  Title,
+  Wrapper,
+  WrapperButton,
+  WrapperContente,
+  WrapperText,
+} from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { StackTypes } from "../../core/routes";
 import Header from "../../components/Header";
@@ -25,8 +32,10 @@ const Terreiros = () => {
             return <TerreiroItem />;
           }}
         />
-        <Button text="Deligar Todos" variant="remove" onPress={() => {}} />
       </WrapperContente>
+      <WrapperButton>
+        <Button text="Deligar Todos" variant="remove" onPress={() => {}} />
+      </WrapperButton>
     </Wrapper>
   );
 };

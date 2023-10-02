@@ -3,6 +3,7 @@ export type HeaderProps = {
   onBack?: boolean;
   onLogOut: boolean;
   onProfile?: () => void;
+  image?: any;
 };
 export type WrapperProps = {
   onBack: boolean;

@@ -1,20 +1,66 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, View, Text } from "react-native";
+import Home from "./src/Screens/home";
+import { styles } from "./src/common/styles";
+import Login from "./src/Screens/Login";
+import { useFonts } from "expo-font";
+import { useCallback, useEffect, useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import { StackComponent } from "./src/core/routes";
+import { toastConfig } from "./src/components/toast/Toast";
+import Toast from "react-native-toast-message";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { UserInfoProvider } from "./src/contexts/userInfo";
 
-export default function App() {
+const App = () => {
+  const [IsReady, SetIsReady] = useState(false);
+  // useEffect(() => {
+  //   async function prepare() {
+  //     try {
+  //       await Font.loadAsync({
+  //         "Inder-Regular": require("./src/common/fonts/Inder/Inder-Regular.ttf"),
+  //       });
+  //     } catch (e) {
+  //       console.warn(e);
+  //     } finally {
+  //       SetIsReady(true);
+  //     }
+  //   }
+
+  //   prepare();
+  // }, []);
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (IsReady) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [IsReady]);
+
+  // if (!IsReady) {
+  //   return (
+  //     <View
+  //       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+  //       // onLayout={onLayoutRootView}
+  //     >
+  //       <Text>SplashScreen Demo! 👋</Text>
+  //     </View>
+  //   );
+  // }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View
+      style={{ flex: 1, backgroundColor: styles.colors.green_400 }}
+      // onLayout={onLayoutRootView}
+    >
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <UserInfoProvider>
+          <StatusBar backgroundColor={styles.colors.green_400} />
+          <StackComponent />
+          <Toast config={toastConfig} />
+        </UserInfoProvider>
+      </GestureHandlerRootView>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

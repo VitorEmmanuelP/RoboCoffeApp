@@ -7,29 +7,32 @@ import {
   Wrapper,
   WrapperContente,
   WrapperDateAndTime,
+  WrapperText,
 } from "./styles";
 import Header from "../../components/Header";
+import { useAppSelector } from "../../storage/redux/store";
+import { selectProfileUrl } from "../../storage/redux/app/appSlice";
+import { StackNavigation } from "../../core/routes/routes.types";
+import { type RouteProp, useRoute } from "@react-navigation/native";
 
 const Notification = () => {
+  const image = useAppSelector(selectProfileUrl);
+  type TerreiroRouteProp = RouteProp<StackNavigation, "Notification">;
+  const route = useRoute<TerreiroRouteProp>();
+
+  const dados = route.params.data;
+
   return (
     <Wrapper>
-      <Header onLogOut text="Notification" />
+      <Header onBack onLogOut text="Notification" image={image} />
       <WrapperContente>
         <WrapperDateAndTime>
-          <DateAndTime>10:30, 10/09/23</DateAndTime>
+          <DateAndTime>{dados.data}</DateAndTime>
         </WrapperDateAndTime>
-        <IdText>1D</IdText>
-        <Texto>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
-        </Texto>
+        <WrapperText>
+          <IdText>{dados.title}</IdText>
+          <Texto>{dados.text}</Texto>
+        </WrapperText>
       </WrapperContente>
     </Wrapper>
   );

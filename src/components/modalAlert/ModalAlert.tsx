@@ -49,7 +49,7 @@ export const ModalAlert: React.FC<ModalProps> = ({
             </Button>
             <Button
               testID="rightButtonTestId"
-              backColor="#00875F"
+              backColor="#C94444"
               onPress={() => {
                 buttonRight.onPress();
                 handleModalClose();

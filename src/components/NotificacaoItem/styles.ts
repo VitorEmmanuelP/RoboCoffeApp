@@ -19,8 +19,8 @@ export const WrapperText = styled.View`
   margin: 10px;
   width: 200px;
   height: 65px;
-  margin-top: 30px;
   align-items: center;
+  justify-content: center;
 `;
 export const WrapperDateAndTime = styled.View`
   position: absolute;
@@ -42,7 +42,7 @@ export const DateAndTime = styled.Text`
 `;
 
 export const Texto = styled.Text`
-  font-size: 25px;
+  font-size: 16px;
   font-weight: 400;
   color: ${styles.colors.gray_700};
 `;

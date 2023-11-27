@@ -13,7 +13,7 @@ const TerreiroItem = ({
   status: string;
   onPress: () => void;
 }) => {
-  const statusText = status.toUpperCase();
+  const statusText = status?.toUpperCase();
 
   return (
     <Wrapper

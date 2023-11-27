@@ -1,13 +1,5 @@
-import {
-  View,
-  Text,
-  TextInput,
-  ActivityIndicator,
-  StyleSheet,
-  Modal,
-  StatusBar,
-} from "react-native";
-import React, { useContext, useState } from "react";
+import { StatusBar } from "react-native";
+import React, { useState } from "react";
 import {
   ProfileImage,
   Wrapper,
@@ -18,25 +10,23 @@ import {
   WrapperInputs,
 } from "./styles";
 import { styles } from "../../common/styles";
-import { MaterialIcons } from "@expo/vector-icons";
 import TextField from "../../components/TextInput";
 import Button from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { StackTypes } from "../../core/routes";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseAuth, FirebaseDataBase } from "../../config";
 import { showToast } from "../../components/toast/Toast";
 import { collection, onSnapshot } from "firebase/firestore";
-import setProfileData from "../../storage/login/setProfileData";
-import { getProfileData } from "../../storage/login/getProfileData";
-import { UserInfoContext } from "../../contexts/userInfo";
 import { LoadingModal } from "../../components/Loading";
+import { useAppDispatch } from "../../storage/redux/store";
+import { setProfileUrl, setUserDados } from "../../storage/redux/app/appSlice";
 
 const Login = () => {
   const navigation = useNavigation<StackTypes>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { saveUserDados } = useContext(UserInfoContext);
+  const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(false);
 
@@ -47,12 +37,13 @@ const Login = () => {
       return new Promise((resolve, reject) => {
         const unsubscribe = onSnapshot(dataBaseRef, {
           next: (snapshot) => {
-            const listData = [];
+            const listData: any[] = [];
             snapshot.docs.forEach((doc) => {
               if (doc.id === id) {
                 listData.push(doc.data());
               }
             });
+
             unsubscribe();
 
             resolve(listData);
@@ -63,7 +54,14 @@ const Login = () => {
         });
       });
     } catch (error) {
-      throw error;
+      showToast({
+        text: "Error",
+        border: true,
+        color: styles.colors.red_100,
+        iconName: "close",
+        position: "bottom",
+        durations: 1000,
+      });
     }
   };
 
@@ -78,16 +76,20 @@ const Login = () => {
 
         setLoading(true);
         if (response.user) {
-          const infoUser = await getData(response.user.uid);
-          setProfileData(infoUser);
-          setLoading(false);
+          const infoUser = (await getData(response.user.uid)) as any;
 
+          dispatch(setProfileUrl(infoUser[0].profileUrl));
+
+          dispatch(setUserDados({ ...infoUser[0], id: response.user.uid }));
+
+          setLoading(false);
           navigation.replace("Tabs");
+
           showToast({
-            text: "Conectado",
+            text: "Login feito com sucesso",
             border: true,
             color: styles.colors.green_400,
-            iconName: "close",
+            iconName: "check",
             position: "bottom",
             durations: 1000,
           });
@@ -150,13 +152,6 @@ const Login = () => {
         </WrapperInputs>
         <WrapperButton>
           <Button variant="add" text="Entrar" onPress={loginCheck} />
-        </WrapperButton>
-        <WrapperButton>
-          <Button
-            variant="underlined"
-            text={"Esqueceu a senha?"}
-            onPress={getData}
-          />
         </WrapperButton>
       </WrapperContent>
     </Wrapper>

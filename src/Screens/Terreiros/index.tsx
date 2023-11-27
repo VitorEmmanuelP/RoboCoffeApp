@@ -1,63 +1,51 @@
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  Texto,
-  Title,
-  Wrapper,
-  WrapperButton,
-  WrapperContente,
-  WrapperText,
-} from "./styles";
+import { Wrapper, WrapperButton, WrapperContente } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 
 import Header from "../../components/Header";
-import ReportItem from "../../components/NotificacaoItem";
-import Reporte from "../../components/ResportItem";
 import TerreiroItem from "../../components/TerreiroItem";
 import Button from "../../components/Button";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
-import { getProfileData } from "../../storage/login/getProfileData";
+import { collection, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { FirebaseDataBase } from "../../config";
 import { StackTypes } from "../../core/routes";
+import { useAppSelector } from "../../storage/redux/store";
+import {
+  selectProfileUrl,
+  selectUserDados,
+} from "../../storage/redux/app/appSlice";
+import TextField from "../../components/TextInput";
 const Terreiros = () => {
   const navigation = useNavigation<StackTypes>();
   const [terreiroDados, seTerreirosDados] = useState<any[]>([]);
+  const image = useAppSelector(selectProfileUrl);
+  const [search, setSearch] = useState("");
+
+  const filteredDados = terreiroDados.filter((obj) => {
+    return obj.idTerreiro?.toLowerCase().startsWith(search?.toLowerCase());
+  });
 
   const [isLoading, setIsLoading] = useState(true);
   const [allOff, setAllOff] = useState(true);
 
-  const handleData = async () => {
-    const dados = await getProfileData();
-
-    if (dados) {
-      const parserDados = JSON.parse(dados);
-      return parserDados[0];
-    }
-  };
+  const dadosUser = useAppSelector(selectUserDados);
   const turnOffAll = async () => {
     try {
-      const dadosUser = await handleData();
       const dataBaseRef = collection(
         FirebaseDataBase,
         `profileData/${dadosUser.id}/terrenos`
       );
 
-      const snapshot = await getDocs(dataBaseRef); // Obter todos os documentos na coleção
+      const snapshot = await getDocs(dataBaseRef);
 
       for (const doc of snapshot.docs) {
-        const docRef = doc.ref; // Obter a referência do documento
+        const docRef = doc.ref;
 
         try {
           await updateDoc(docRef, {
             status: allOff ? "off" : "ok",
             on: allOff ? false : true,
-          }); // Atualiza o campo 'on' para 'false'
+          });
         } catch (error) {
           console.error(
             `Erro ao atualizar campo 'on' para o documento com ID ${doc.id}:`,
@@ -75,7 +63,6 @@ const Terreiros = () => {
 
     const fetchData = async () => {
       try {
-        const dadosUser = await handleData();
         seTerreirosDados((prev) => [...prev, { idUser: dadosUser.id }]);
         const dataBaseRef = collection(
           FirebaseDataBase,
@@ -89,17 +76,15 @@ const Terreiros = () => {
               snapshot.docs.forEach((docs) => {
                 if (docs.data().status !== "off") {
                   setAllOff(true);
-                  console.log("aa");
                 } else {
-                  console.log("bb");
                   setAllOff(false);
                 }
-
                 listData.push({ id: docs.id, ...docs.data() });
               });
               seTerreirosDados(listData);
               setIsLoading(false);
             },
+
             error: (error) => {
               console.error("Erro ao obter dados do Firestore:", error);
               setIsLoading(false);
@@ -122,39 +107,47 @@ const Terreiros = () => {
       isMounted = false;
     };
   }, []);
-
   return (
     <Wrapper>
-      <Header onLogOut onBack text="Terreiros" />
+      <Header onLogOut onBack text="Terreiros" image={image} />
       <WrapperContente>
         {isLoading ? (
           <ActivityIndicator size={50} />
         ) : (
-          <FlatList
-            data={terreiroDados}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => {
-              return (
-                <View style={{ marginBottom: 10 }}>
-                  <TerreiroItem
-                    id={item.idTerreiro}
-                    status={item.status}
-                    onPress={() => {
-                      navigation.navigate("Terreiro", {
-                        data: {
-                          id: item.id,
+          <View
+            style={{ gap: 20, justifyContent: "center", alignItems: "center" }}
+          >
+            <TextField
+              placeholder="Procurar"
+              value={search}
+              onChangeText={setSearch}
+            />
 
-                          idTerreiro: item.idTerreiro,
-                          on: item.on,
-                          status: item.status,
-                        },
-                      });
-                    }}
-                  />
-                </View>
-              );
-            }}
-          />
+            <FlatList
+              data={filteredDados}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => {
+                return (
+                  <View style={{ marginBottom: 10 }}>
+                    <TerreiroItem
+                      id={item.idTerreiro}
+                      status={item.status}
+                      onPress={() => {
+                        navigation.navigate("Terreiro", {
+                          data: {
+                            id: item.id,
+                            idTerreiro: item.idTerreiro,
+                            on: item.on,
+                            status: item.status,
+                          },
+                        });
+                      }}
+                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
         )}
       </WrapperContente>
       <WrapperButton>
@@ -163,13 +156,6 @@ const Terreiros = () => {
           variant={allOff ? "remove" : "filled"}
           onPress={() => {
             turnOffAll();
-          }}
-        />
-        <Button
-          text="Move"
-          variant="filled"
-          onPress={() => {
-            navigation.navigate("Move");
           }}
         />
       </WrapperButton>

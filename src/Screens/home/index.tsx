@@ -1,6 +1,5 @@
-import { View, Text, Image } from "react-native";
-import React, { useEffect, useState } from "react";
-import { styles } from "../../common/styles";
+import { Image } from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import Header from "../../components/Header";
@@ -17,20 +16,14 @@ import { StackTypes } from "../../core/routes";
 import Button from "../../components/Button";
 import Tag from "../../components/Tag";
 import Svg, { Path } from "react-native-svg";
+import { useAppSelector } from "../../storage/redux/store";
+import { selectProfileUrl } from "../../storage/redux/app/appSlice";
 
 const Home = () => {
   const navigation = useNavigation<StackTypes>();
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime] = useState(new Date());
 
-  useEffect(() => {
-    const updateTime = () => {
-      setCurrentTime(new Date());
-    };
-    const timer = setInterval(updateTime, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  const image = useAppSelector(selectProfileUrl);
 
   const formattedTime = currentTime.toLocaleTimeString("pt-BR", {
     hour: "2-digit",
@@ -39,7 +32,7 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <Header text="Home" onLogOut />
+      <Header text="Home" onLogOut image={image} />
       <WrapperContent>
         <WrapperSol>
           <Svg width="303" height="146" viewBox="0 0 303 146" fill="none">
@@ -64,7 +57,7 @@ const Home = () => {
 
         <WrapperStatus>
           <Texto>STATUS:</Texto>
-          <Tag variant="ALERT" size="BIG" />
+          <Tag variant="OK" size="BIG" />
         </WrapperStatus>
 
         <WrapperButton>

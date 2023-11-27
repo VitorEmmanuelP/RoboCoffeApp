@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import React, { useState } from "react";
+import { StatusBar, Switch, Text } from "react-native";
 
 import {
   IdText,
@@ -19,46 +19,58 @@ import { styles } from "../../common/styles";
 import Button from "../../components/Button";
 import { StackNavigation } from "../../core/routes/routes.types";
 import { type RouteProp, useRoute } from "@react-navigation/native";
-import { Switch } from "react-native";
-import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { FirebaseDataBase } from "../../config";
-import { getProfileData } from "../../storage/login/getProfileData";
 import { ModalAlert } from "../../components/modalAlert/ModalAlert";
+import { useAppSelector } from "../../storage/redux/store";
+import {
+  selectProfileUrl,
+  selectUserDados,
+} from "../../storage/redux/app/appSlice";
+import { showToast } from "../../components/toast/Toast";
 
 const Terreiro = () => {
   type TerreiroRouteProp = RouteProp<StackNavigation, "Terreiro">;
   const route = useRoute<TerreiroRouteProp>();
+  const navigation = useNavigation<StackTypes>();
 
-  const { data } = route.params || "groupCreate";
+  const { data } = route.params;
   const [isEnabled, setIsEnabled] = useState(data.on);
   const [visible, setVisible] = useState(false);
+  const image = useAppSelector(selectProfileUrl);
 
-  const [dadosUser, setDadosUser] = useState();
+  const dadosUser = useAppSelector(selectUserDados);
 
-  const handleData = async () => {
-    const dados = await getProfileData();
+  const deleteTerreiro = async () => {
+    const dataBaseRef = doc(
+      FirebaseDataBase,
+      `profileData/${dadosUser.id}/terrenos/${data.id}`
+    );
 
-    if (dados) {
-      const parserDados = JSON.parse(dados);
-      setDadosUser(parserDados[0].id);
-    }
+    await deleteDoc(dataBaseRef);
+
+    navigation.goBack();
+    showToast({
+      text: "Deletado com sucesso",
+      border: true,
+      color: styles.colors.red_100,
+      iconName: "close",
+      position: "bottom",
+      durations: 1000,
+    });
   };
-
-  useEffect(() => {
-    handleData();
-  }, []);
 
   const toggleSwitch = async () => {
     const dataBaseRef = doc(
       FirebaseDataBase,
-      `profileData/${dadosUser}/terrenos/${data.id}`
+      `profileData/${dadosUser.id}/terrenos/${data.id}`
     );
 
     try {
       await updateDoc(dataBaseRef, {
         on: !isEnabled,
         status: !isEnabled ? "ok" : "off",
-      }); // Atualiza o campo 'on' para 'false'
+      });
       console.log("Campo 'on' atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar campo 'on':", error);
@@ -68,7 +80,12 @@ const Terreiro = () => {
 
   return (
     <Wrapper>
-      <Header onLogOut onBack text="Terreiro" />
+      <StatusBar
+        backgroundColor={
+          visible ? "rgba(2,59,40,255)" : styles.colors.green_400
+        }
+      />
+      <Header onLogOut onBack text="Terreiro" image={image} />
       <WrapperContente>
         <IdText>{data.idTerreiro}</IdText>
         <WrapperStatus>
@@ -97,13 +114,27 @@ const Terreiro = () => {
         <ModalAlert
           visible={visible}
           buttonLeft={{ text: "CANCELAR", onPress: () => {} }}
-          buttonRight={{ text: "DELETAR", onPress: () => {} }}
+          buttonRight={{
+            text: "DELETAR",
+            onPress: () => {
+              deleteTerreiro();
+            },
+          }}
           onClose={() => {
             setVisible((prev) => !prev);
           }}
         >
           <Text>Deseja realmente deletar o terreno?</Text>
         </ModalAlert>
+        <Button
+          text="Move"
+          variant="filled"
+          onPress={() => {
+            navigation.navigate("Move", {
+              data: { id: data.id, idTerreiro: data.idTerreiro },
+            });
+          }}
+        />
         <Button
           variant="remove"
           text="Apagar"

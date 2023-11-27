@@ -6,7 +6,6 @@ export const UserInfoProvider = ({ children }) => {
   const [userDados, setUserDados] = useState();
 
   const saveUserDados = (dados) => {
-    console.log(dados);
     setUserDados(dados);
   };
 

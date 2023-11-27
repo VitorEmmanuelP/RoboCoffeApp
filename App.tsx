@@ -11,6 +11,8 @@ import { toastConfig } from "./src/components/toast/Toast";
 import Toast from "react-native-toast-message";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { UserInfoProvider } from "./src/contexts/userInfo";
+import { Provider } from "react-redux";
+import { store } from "./src/storage/redux/store";
 
 const App = () => {
   const [IsReady, SetIsReady] = useState(false);
@@ -52,13 +54,15 @@ const App = () => {
       style={{ flex: 1, backgroundColor: styles.colors.green_400 }}
       // onLayout={onLayoutRootView}
     >
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <UserInfoProvider>
-          <StatusBar backgroundColor={styles.colors.green_400} />
-          <StackComponent />
-          <Toast config={toastConfig} />
-        </UserInfoProvider>
-      </GestureHandlerRootView>
+      <Provider store={store}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <UserInfoProvider>
+            <StatusBar backgroundColor={styles.colors.green_400} />
+            <StackComponent />
+            <Toast config={toastConfig} />
+          </UserInfoProvider>
+        </GestureHandlerRootView>
+      </Provider>
     </View>
   );
 };

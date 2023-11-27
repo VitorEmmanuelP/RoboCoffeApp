@@ -7,13 +7,13 @@ import { getStorage } from "firebase/storage";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDOxKjfr2yZGQOxFIU7wS2r_41zGE9j4YM",
-  authDomain: "robocoffe-6df23.firebaseapp.com",
-  projectId: "robocoffe-6df23",
-  storageBucket: "robocoffe-6df23.appspot.com",
-  messagingSenderId: "286973181169",
-  appId: "1:286973181169:web:f87750543a565aa5bbfd50",
-  measurementId: "G-NSWB6VSHDL",
+  apiKey: "AIzaSyBmn-CaN8E_2INGc5UkidmXzw3KfC7svbI",
+  authDomain: "robocoffe-b0b2f.firebaseapp.com",
+  projectId: "robocoffe-b0b2f",
+  storageBucket: "robocoffe-b0b2f.appspot.com",
+  messagingSenderId: "54026175857",
+  appId: "1:54026175857:web:fd1f730fdb099c9c7ea2d0",
+  measurementId: "G-5X758QG37G",
 };
 
 export const Firebase = initializeApp(firebaseConfig);

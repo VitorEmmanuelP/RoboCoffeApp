@@ -5,8 +5,8 @@ import { styles } from "../../common/styles";
 export const LoadingModal = ({ isVisible }: { isVisible: boolean }) => {
   return (
     <Modal transparent visible={isVisible}>
-      <View style={ad.modalContainer}>
-        <View style={ad.modalContent}>
+      <View style={estilo.modalContainer}>
+        <View style={estilo.modalContent}>
           <ActivityIndicator size={50} color={styles.colors.green_400} />
           <Text style={{ marginTop: 30, fontWeight: "bold" }}>Loading...</Text>
         </View>
@@ -15,7 +15,7 @@ export const LoadingModal = ({ isVisible }: { isVisible: boolean }) => {
   );
 };
 
-const ad = StyleSheet.create({
+const estilo = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: "center",

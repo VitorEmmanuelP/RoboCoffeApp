@@ -1,12 +1,12 @@
 export type StackNavigation = {
   Home: undefined;
   Login: undefined;
-  Move: undefined;
+  Move: MoveProps;
   Notifications: undefined;
-  Notification: undefined;
+  Notification: NotificationProps;
   Profile: undefined;
   Reports: undefined;
-  ReportItem: undefined;
+  ReportItem: Dados;
   Tabs: undefined;
   AddTerrain: undefined;
   Terreiros: undefined;
@@ -20,5 +20,30 @@ type TerreitoProps = {
     idTerreiro: string;
     status: string;
     on: boolean;
+  };
+};
+type MoveProps = {
+  data: {
+    id: string;
+    idTerreiro: string;
+  };
+};
+
+type NotificationProps = {
+  data: {
+    id: string;
+    idTerreiro: string;
+    data: string;
+    text: string;
+    title: string;
+  };
+};
+type Dados = {
+  data: {
+    id: string;
+    criador: string;
+    funcionamento: string;
+    data: string;
+    terreno: string;
   };
 };

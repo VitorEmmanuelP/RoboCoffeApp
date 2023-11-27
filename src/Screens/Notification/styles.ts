@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { styles } from "../../common/styles";
-import { TouchableHighlight, TouchableOpacity, Text } from "react-native";
+import { Text } from "react-native";
 
 export const Wrapper = styled.View`
   flex: 1;
@@ -13,10 +13,14 @@ export const WrapperContente = styled.View`
   margin-top: 20px;
   align-self: center;
   align-items: center;
-  justify-content: space-around;
+
   padding: 20px;
   background-color: ${styles.colors.base_white};
 `;
+export const WrapperText = styled.View`
+  gap: 20px;
+`;
+
 export const IdText = styled.Text`
   font-size: 30px;
   font-weight: 400;
@@ -37,6 +41,6 @@ export const DateAndTime = styled.Text`
 export const Texto = styled(Text)`
   font-size: 15px;
   font-weight: 400;
-  padding: 0px 20px;
+  text-align: justify;
   color: black;
 `;

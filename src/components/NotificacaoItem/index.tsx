@@ -11,22 +11,31 @@ import {
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { StackTypes } from "../../core/routes";
-const NotificacaoItem = () => {
+
+type NotificationProps = {
+  dados: {
+    id: string;
+    title: string;
+    idTerreiro: string;
+    text: string;
+    data: string;
+  };
+};
+
+const NotificacaoItem = ({ dados }: NotificationProps) => {
   const navigation = useNavigation<StackTypes>();
   return (
     <Wrapper
       onPress={() => {
-        navigation.navigate("Notification");
+        navigation.navigate("Notification", { data: dados });
       }}
     >
-      <IdText>1A</IdText>
+      <IdText>{dados.idTerreiro}</IdText>
       <WrapperText>
-        <Texto adjustsFontSizeToFit numberOfLines={2}>
-          Lorem Ipsum is simply dummy text of the printi...
-        </Texto>
+        <Texto numberOfLines={2}>{dados.title}</Texto>
       </WrapperText>
       <WrapperDateAndTime>
-        <DateAndTime>10:30, 10/09/23</DateAndTime>
+        <DateAndTime>{dados.data}</DateAndTime>
       </WrapperDateAndTime>
       <Icons tamanho={30} name="keyboard-arrow-right" />
     </Wrapper>
